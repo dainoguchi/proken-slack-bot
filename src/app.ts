@@ -1,4 +1,4 @@
-import { App, GlobalShortcut, AppMentionEvent } from "@slack/bolt";
+import { App, Button, View } from "@slack/bolt";
 import { config } from "dotenv";
 import { callGPT35 } from "./lib/gpt";
 
@@ -47,6 +47,67 @@ app.event("app_mention", async ({ event, say }) => {
   await say({
     text: `GPT-3.5 response: ${response}`,
     thread_ts: event.ts, // Reply in the same thread where the bot was mentioned
+  });
+});
+
+app.shortcut("show-buttons", async ({ ack, body, client }) => {
+  await ack();
+
+  const buttons: Button[] = [];
+  for (let i = 0; i < 5; i++) {
+    buttons.push({
+      type: "button",
+      text: {
+        type: "plain_text",
+        text: `Button ${i + 1}`,
+      },
+      value: `button_${i + 1}`,
+      action_id: `button_${i + 1}`,
+    });
+  }
+
+  const modalView: View = {
+    type: "modal",
+    callback_id: "my_modal",
+    title: {
+      type: "plain_text",
+      text: "My Modal",
+    },
+    blocks: [
+      {
+        type: "header",
+        text: {
+          type: "plain_text",
+          text: "New request",
+        },
+      },
+      {
+        type: "section",
+        fields: [
+          {
+            type: "mrkdwn",
+            text: "*Type:*\nPaid Time Off",
+          },
+          {
+            type: "mrkdwn",
+            text: "*Created by:*\n<example.com|Fred Enriquez>",
+          },
+        ],
+      },
+      {
+        type: "actions",
+        elements: buttons,
+      },
+      {
+        type: "actions",
+        elements: buttons,
+      },
+    ],
+  };
+
+  await client.views.open({
+    trigger_id: body.trigger_id,
+    view: modalView,
   });
 });
 
