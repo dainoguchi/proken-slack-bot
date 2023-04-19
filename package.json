@@ -1,0 +1,31 @@
+{
+  "name": "slackbot-bolt-ts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run build && npm run serve",
+    "start-server": "npm run build && npm run serve",
+    "build": "npx tsc",
+    "serve": "node --require dotenv/config dist/app.js",
+    "serve-server": "node --require dotenv/config dist/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@googleapis/sheets": "^4.0.2",
+    "@slack/bolt": "^3.13.0",
+    "@slack/types": "^2.8.0",
+    "@types/node": "^18.15.11",
+    "dotenv": "^16.0.3",
+    "firebase-admin": "^11.6.0",
+    "googleapis": "^114.0.0",
+    "openai": "^3.2.1"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.3"
+  }
+}
