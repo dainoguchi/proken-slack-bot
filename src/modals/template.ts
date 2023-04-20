@@ -1,12 +1,20 @@
 import { View } from "@slack/bolt";
 import { openModalArgs } from "../type";
 
-export const openTemplateModal = async ({ body, client }:openModalArgs) => {
+export const openTemplateModal = async ({ body, client }: openModalArgs) => {
+  const metadata = JSON.stringify({
+    channel_id: body.channel.id,
+    message_ts: body.message.ts,
+  });
+
   await client.views.open({
     trigger_id: body.trigger_id,
-    view: templateModalView,
+    view: {
+      ...templateModalView,
+      private_metadata: metadata,
+    },
   });
-}
+};
 
 export const templateModalView: View = {
   type: "modal",
