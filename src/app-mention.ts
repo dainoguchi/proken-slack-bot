@@ -1,41 +1,11 @@
 import { ask } from "./lib/gpt";
-import { AckFn, SayFn, View } from "@slack/bolt";
+import { emailModalView } from "./features/mail";
+import { SayFn } from "@slack/bolt";
 import { WebClient } from "@slack/web-api";
-
-const modalView: View = {
-  type: "modal",
-  callback_id: "email_modal",
-  title: {
-    type: "plain_text",
-    text: "ChatGPTにお願いしたいこと",
-  },
-  blocks: [
-    {
-      type: "actions",
-      block_id: "modal_actions",
-      elements: [
-        {
-          type: "button",
-          action_id: "modal_button",
-          text: {
-            type: "plain_text",
-            text: "Emailを書いてください",
-          },
-        },
-      ],
-    },
-  ],
-};
-
 interface AppMentionArgs {
   client: WebClient;
   event: any;
   say: SayFn;
-}
-
-interface openModalArgs {
-  body: any;
-  client: WebClient;
 }
 
 export const appMention = async ({ client, event, say }: AppMentionArgs) => {
@@ -91,17 +61,22 @@ export const appMention = async ({ client, event, say }: AppMentionArgs) => {
 
     const response = await ask(prompt);
 
-    // Send the response back to the channel in the same thread
+    // スレッドにGPTから返信
     await say({
-      text: `GPT-3.5 response: ${response}`,
-      thread_ts: event.ts, // Reply in the same thread where the bot was mentioned
+      text: `Response: ${response}`,
+      thread_ts: event.ts,
     });
   }
 };
 
+interface openModalArgs {
+  body: any;
+  client: WebClient;
+}
+
 export const openEmailModal = async ({ body, client }:openModalArgs) => {
   await client.views.open({
     trigger_id: body.trigger_id,
-    view: modalView,
+    view: emailModalView,
   });
 }
