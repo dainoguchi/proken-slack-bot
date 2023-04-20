@@ -9,7 +9,7 @@ const openai = new OpenAIApi(configuration);
 const GPT_4 = "gpt-4";
 const GPT_3_5 = "gpt-3.5-turbo";
 
-export const ask = async (prompt: string, model = GPT_4) => {
+export const ask = async (prompt: string, model = GPT_3_5) => {
   try {
     const response = await openai.createChatCompletion({
       model: model,

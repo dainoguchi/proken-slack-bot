@@ -1,5 +1,7 @@
 import { app } from "./app";
-import { appMention, openEmailModal } from "./app-mention";
+import { appMention } from "./mention";
+import { openEmailModal } from "./modals/email";
+import { openTemplateModal } from "./modals/template";
 import { pingCommand } from "./command";
 
 (async () => {
@@ -8,8 +10,11 @@ import { pingCommand } from "./command";
   console.log("⚡️ Bolt app is running!");
 })();
 
-app.command("/ping", pingCommand);
+function usePingCommand(app: any) {
+  app.command("/ping", pingCommand);
+}
 
+usePingCommand(app)
 app.event("app_mention", appMention);
-
+app.action("open_template_modal_button", openTemplateModal);
 app.action("open_email_modal_button", openEmailModal);
