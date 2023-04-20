@@ -1,12 +1,5 @@
 import { ask } from "./lib/gpt";
-import { emailModalView } from "./features/mail";
-import { SayFn } from "@slack/bolt";
-import { WebClient } from "@slack/web-api";
-interface AppMentionArgs {
-  client: WebClient;
-  event: any;
-  say: SayFn;
-}
+import { AppMentionArgs } from "./type";
 
 export const appMention = async ({ client, event, say }: AppMentionArgs) => {
   const prompt = event.text.trim();
@@ -19,24 +12,37 @@ export const appMention = async ({ client, event, say }: AppMentionArgs) => {
 
   // promptが空の場合はモーダルを表示
   if (promptArray.length === 1) {
-    say({
-      blocks: [    
-        {
-          type: "section",
-          block_id: "button_block",
-          text: {
-            type: "mrkdwn",
-            text: "Events API から直接モーダルを開くことはできません。ボタンをクリックしてもらう必要があります。",
+    say(
+      {
+        blocks: [
+          {
+            type: "actions",
+            elements: [
+              {
+                type: "button", 
+                text: {
+                  type: "plain_text",
+                  text: "使い方を見る",
+                  emoji: true,
+                },
+                value: "clicked",
+                action_id: "open_usage_modal_button",
+              },
+              {
+                type: "button",
+                text: {
+                  type: "plain_text",
+                  text: "テンプレート一覧を見る",
+                  emoji: true,
+                },
+                value: "clicked",
+                action_id: "open_template_modal_button",
+              },
+            ],
           },
-          accessory: {
-              type: "button",
-              text: {"type": "plain_text", "text": "Mailモーダルを開く"},
-              value: "clicked",
-              action_id: "open_email_modal_button",
-          },
-        },
-      ]
-    });
+        ],
+      }
+    );
   } else {
     const channelId = event.channel;
 
@@ -49,7 +55,7 @@ export const appMention = async ({ client, event, say }: AppMentionArgs) => {
       ts: threadId,
     });
 
-    console.log("replies.messages: \n", replies.messages);
+    console.log("replies.messages: \n", replies.messages[0]);
 
     if (!replies.messages) {
       await say({
@@ -60,6 +66,7 @@ export const appMention = async ({ client, event, say }: AppMentionArgs) => {
     }
 
     const response = await ask(prompt);
+    console.log(response)
 
     // スレッドにGPTから返信
     await say({
@@ -68,15 +75,3 @@ export const appMention = async ({ client, event, say }: AppMentionArgs) => {
     });
   }
 };
-
-interface openModalArgs {
-  body: any;
-  client: WebClient;
-}
-
-export const openEmailModal = async ({ body, client }:openModalArgs) => {
-  await client.views.open({
-    trigger_id: body.trigger_id,
-    view: emailModalView,
-  });
-}

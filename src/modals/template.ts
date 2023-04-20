@@ -1,6 +1,14 @@
 import { View } from "@slack/bolt";
+import { openModalArgs } from "../type";
 
-export const emailModalView: View = {
+export const openTemplateModal = async ({ body, client }:openModalArgs) => {
+  await client.views.open({
+    trigger_id: body.trigger_id,
+    view: templateModalView,
+  });
+}
+
+export const templateModalView: View = {
   type: "modal",
   callback_id: "email_modal",
   title: {
@@ -14,7 +22,7 @@ export const emailModalView: View = {
       elements: [
         {
           type: "button",
-          action_id: "modal_button",
+          action_id: "open_email_modal_button",
           text: {
             type: "plain_text",
             text: "Emailを書いてください",
