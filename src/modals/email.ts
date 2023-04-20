@@ -1,12 +1,12 @@
 import { View } from "@slack/bolt";
 import { openModalArgs } from "../type";
 
-export const openEmailModal = async ({ body, client }:openModalArgs) => {
+export const openEmailModal = async ({ body, client }: openModalArgs) => {
   await client.views.push({
     trigger_id: body.trigger_id,
     view: emailModalView,
   });
-}
+};
 
 export const emailModalView: View = {
   type: "modal",
@@ -16,42 +16,44 @@ export const emailModalView: View = {
     text: "ChatGPTにお願いしたいこと",
   },
   submit: {
-    type: "plain_text", 
-    text: "送信"
+    type: "plain_text",
+    text: "送信",
   },
   blocks: [
-        {
-            type: "section",
-            text: {
-                type: "mrkdwn",
-                text: "メール作成"
-            }
-        },
-        {
-            dispatch_action: true,
-            type: "input",
-            element: {
-                type: "plain_text_input",
-                action_id: "plain_text_input-action"
-            },
-            label: {
-                type: "plain_text",
-                text: "相手はどのような人ですか？",
-                emoji: true
-            }
-        },
-        {
-            type: "input",
-            element: {
-                type: "plain_text_input",
-                multiline: true,
-                action_id: "plain_text_input-action"
-            },
-            label: {
-                type: "plain_text",
-                text: "どのような内容ですか？",
-                emoji: true
-            }
-        },
-    ],
+    {
+      type: "section",
+      text: {
+        type: "mrkdwn",
+        text: "メールのたたき台作成",
+      },
+    },
+    {
+      // dispatch_action: true,
+      type: "input",
+      block_id: "email_purpose_block",
+      element: {
+        type: "plain_text_input",
+        action_id: "email_purpose_block",
+      },
+      label: {
+        type: "plain_text",
+        text: "どのような用途ですか？",
+        emoji: true,
+      },
+    },
+    {
+      type: "input",
+      block_id: "email_body_block",
+      element: {
+        type: "plain_text_input",
+        multiline: true,
+        action_id: "email_body_block",
+      },
+      label: {
+        type: "plain_text",
+        text: "どのような内容ですか？",
+        emoji: true,
+      },
+    },
+  ],
 };
