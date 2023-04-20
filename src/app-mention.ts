@@ -1,32 +1,7 @@
 import { ask } from "./lib/gpt";
-import { AppMentionEvent, SayFn, View } from "@slack/bolt";
+import { emailModalView } from "./features/mail";
+import { SayFn } from "@slack/bolt";
 import { WebClient } from "@slack/web-api";
-
-const modalView: View = {
-  type: "modal",
-  callback_id: "email_modal",
-  title: {
-    type: "plain_text",
-    text: "ChatGPTにお願いしたいこと",
-  },
-  blocks: [
-    {
-      type: "actions",
-      block_id: "modal_actions",
-      elements: [
-        {
-          type: "button",
-          action_id: "modal_button",
-          text: {
-            type: "plain_text",
-            text: "Emailを書いてください",
-          },
-        },
-      ],
-    },
-  ],
-};
-
 interface AppMentionArgs {
   client: WebClient;
   event: any;
@@ -35,15 +10,32 @@ interface AppMentionArgs {
 
 export const appMention = async ({ client, event, say }: AppMentionArgs) => {
   const prompt = event.text.trim();
+  console.log(event)
 
-  console.log(prompt);
+  // promptを' 'でsplitして
+  // 要素数が1つの場合はモーダルを表示
+  // 要素数が2つ以上の場合はGPT-3.5に質問
+  const promptArray = prompt.split(" ");
 
   // promptが空の場合はモーダルを表示
-  if (prompt === "") {
-    await client.views.open({
-      trigger_id: event.trigger_id,
-      // モーダル + callbackの定義
-      view: modalView,
+  if (promptArray.length === 1) {
+    say({
+      blocks: [    
+        {
+          type: "section",
+          block_id: "button_block",
+          text: {
+            type: "mrkdwn",
+            text: "Events API から直接モーダルを開くことはできません。ボタンをクリックしてもらう必要があります。",
+          },
+          accessory: {
+              type: "button",
+              text: {"type": "plain_text", "text": "Mailモーダルを開く"},
+              value: "clicked",
+              action_id: "open_email_modal_button",
+          },
+        },
+      ]
     });
   } else {
     const channelId = event.channel;
@@ -69,10 +61,22 @@ export const appMention = async ({ client, event, say }: AppMentionArgs) => {
 
     const response = await ask(prompt);
 
-    // Send the response back to the channel in the same thread
+    // スレッドにGPTから返信
     await say({
-      text: `GPT-3.5 response: ${response}`,
-      thread_ts: event.ts, // Reply in the same thread where the bot was mentioned
+      text: `Response: ${response}`,
+      thread_ts: event.ts,
     });
   }
 };
+
+interface openModalArgs {
+  body: any;
+  client: WebClient;
+}
+
+export const openEmailModal = async ({ body, client }:openModalArgs) => {
+  await client.views.open({
+    trigger_id: body.trigger_id,
+    view: emailModalView,
+  });
+}
