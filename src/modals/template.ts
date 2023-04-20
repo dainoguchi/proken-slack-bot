@@ -1,5 +1,5 @@
 import { View } from "@slack/bolt";
-import { openModalArgs } from "./type";
+import { openModalArgs } from "../type";
 
 export const openTemplateModal = async ({ body, client }:openModalArgs) => {
   await client.views.open({

@@ -1,12 +1,5 @@
 import { ask } from "./lib/gpt";
-import { SayFn } from "@slack/bolt";
-import { WebClient } from "@slack/web-api";
-
-interface AppMentionArgs {
-  client: WebClient;
-  event: any;
-  say: SayFn;
-}
+import { AppMentionArgs } from "./type";
 
 export const appMention = async ({ client, event, say }: AppMentionArgs) => {
   const prompt = event.text.trim();
