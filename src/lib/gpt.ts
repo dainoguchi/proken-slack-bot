@@ -1,4 +1,4 @@
-import { Configuration, OpenAIApi } from "openai";
+import { ChatCompletionRequestMessage, Configuration, OpenAIApi } from "openai";
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -6,16 +6,16 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-// ログを作るとか
-// もうちょっと作るとか
-export const callGPT35 = async (prompt: string): Promise<string> => {
+const GPT_4 = "gpt-4";
+const GPT_3_5 = "gpt-3.5-turbo";
+
+export const ask = async (prompt: string, model = GPT_3_5) => {
   try {
     const response = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
       messages: [{ role: "user", content: prompt }],
     });
-    const generatedText = response.data.choices[0].message.content;
-    return generatedText.trim();
+    return response.data.choices[0].message.content;
   } catch (error) {
     console.error("Error calling GPT-3.5:", error);
     return "Sorry, there was an error generating a response.";
