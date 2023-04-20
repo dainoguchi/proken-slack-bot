@@ -1,5 +1,5 @@
 import { ask } from "./lib/gpt";
-import { AppMentionEvent, SayFn, View } from "@slack/bolt";
+import { AckFn, SayFn, View } from "@slack/bolt";
 import { WebClient } from "@slack/web-api";
 
 const modalView: View = {
@@ -33,17 +33,39 @@ interface AppMentionArgs {
   say: SayFn;
 }
 
+interface openModalArgs {
+  body: any;
+  client: WebClient;
+}
+
 export const appMention = async ({ client, event, say }: AppMentionArgs) => {
   const prompt = event.text.trim();
+  console.log(event)
 
-  console.log(prompt);
+  // promptを' 'でsplitして
+  // 要素数が1つの場合はモーダルを表示
+  // 要素数が2つ以上の場合はGPT-3.5に質問
+  const promptArray = prompt.split(" ");
 
   // promptが空の場合はモーダルを表示
-  if (prompt === "") {
-    await client.views.open({
-      trigger_id: event.trigger_id,
-      // モーダル + callbackの定義
-      view: modalView,
+  if (promptArray.length === 1) {
+    say({
+      blocks: [    
+        {
+          type: "section",
+          block_id: "button_block",
+          text: {
+            type: "mrkdwn",
+            text: "Events API から直接モーダルを開くことはできません。ボタンをクリックしてもらう必要があります。",
+          },
+          accessory: {
+              type: "button",
+              text: {"type": "plain_text", "text": "Mailモーダルを開く"},
+              value: "clicked",
+              action_id: "open_email_modal_button",
+          },
+        },
+      ]
     });
   } else {
     const channelId = event.channel;
@@ -76,3 +98,10 @@ export const appMention = async ({ client, event, say }: AppMentionArgs) => {
     });
   }
 };
+
+export const openEmailModal = async ({ body, client }:openModalArgs) => {
+  await client.views.open({
+    trigger_id: body.trigger_id,
+    view: modalView,
+  });
+}
