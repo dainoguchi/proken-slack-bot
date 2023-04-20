@@ -1,14 +1,12 @@
 import { SayFn } from "@slack/bolt";
 import { WebClient } from "@slack/web-api";
-
-export interface AppMentionArgs {
+export type AppMentionArgs = {
   client: WebClient;
   event: any;
   say: SayFn;
 }
 
-
-export interface openModalArgs {
+export type openModalArgs = {
   body: any;
   client: WebClient;
 }
