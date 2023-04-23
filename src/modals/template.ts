@@ -2,6 +2,10 @@ import { View } from "@slack/bolt";
 import { openModalArgs } from "../type";
 
 export const openTemplateModal = async ({ body, client }: openModalArgs) => {
+  console.log("openTemplateModal    ");
+  console.log(body);
+  console.log("modal 終わり");
+
   const metadata = JSON.stringify({
     channel_id: body.channel.id,
     message_ts: body.message.ts,
