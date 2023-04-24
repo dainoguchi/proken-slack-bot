@@ -109,7 +109,8 @@ const generateEmailPrompt = (input: string): string => {
 };
 
 export const submitEmailPrompt = async ({ body, client, ack }: submitPromptArgs) => {
-  await ack();
+  await ack({"response_action": "clear"});
+
   const emailPurposeBlock =
   body.view.state.values.email_purpose_block.email_purpose_action;
 
@@ -120,7 +121,6 @@ export const submitEmailPrompt = async ({ body, client, ack }: submitPromptArgs)
   } else {
     console.error("Error: emailPurposeBlock is undefined.");
   }
-
 
   const metadata = JSON.parse(body.view.private_metadata);
   const { channel_id, message_ts } = metadata;
