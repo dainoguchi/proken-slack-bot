@@ -1,7 +1,10 @@
-import { SlashCommand, AckFn, RespondFn } from "@slack/bolt";
+import { SlashCommand, AckFn, RespondFn, App } from "@slack/bolt";
 
-export const pingCommand = async ({
-  command,
+export const addPingCommand = (app: App) => {
+  app.command("/ping", pingCommand);
+};
+
+const pingCommand = async ({
   ack,
   respond,
 }: {
