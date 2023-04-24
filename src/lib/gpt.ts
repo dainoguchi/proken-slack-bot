@@ -26,6 +26,7 @@ export const askWithHistory = async (
   messages: ChatCompletionRequestMessage[],
   model = GPT_3_5
 ) => {
+  console.log("message:", messages)
   const response = await openai.createChatCompletion({
     model: model,
     messages: messages,

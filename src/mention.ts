@@ -64,6 +64,7 @@ export const appMention = async ({ client, event, say }: AppMentionArgs) => {
         return;
       }
 
+      // ローディング用の文面を返信
       const waitingMessage = "GPTに聞いています。しばらくお待ち下さい";
       await say({
         text: waitingMessage,
@@ -83,6 +84,9 @@ export const appMention = async ({ client, event, say }: AppMentionArgs) => {
           return null;
         }
 
+        // スレッドの中の質問投稿時に
+        // BotかUserのロールを付与する
+        // botに対するメンションを消す
         return {
           role:
             message.user === botUserId
@@ -108,7 +112,7 @@ export const appMention = async ({ client, event, say }: AppMentionArgs) => {
       console.log("threadMessages: ", threadMessages);
 
       const gptAnswerText = await askWithHistory(
-        Object.assign(preContext, threadMessages)
+        [...preContext, ...threadMessages] // 配列を結合
       );
 
       /* スレッドに返信 */
