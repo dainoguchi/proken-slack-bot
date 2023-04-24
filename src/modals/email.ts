@@ -1,5 +1,6 @@
 import { View } from "@slack/bolt";
-import { openModalArgs } from "../type";
+import { openModalArgs, submitPromptArgs } from "../type";
+import { ask } from "../lib/gpt";
 
 export const openEmailModal = async ({ body, client }: openModalArgs) => {
   console.log("openEmailModal    ");
@@ -25,8 +26,8 @@ export const emailModalView: View = {
     text: "ChatGPTにお願いしたいこと",
   },
   submit: {
-    type: "plain_text",
-    text: "送信",
+    "type": "plain_text", 
+    "text": "送信"
   },
   blocks: [
     {
@@ -101,4 +102,38 @@ export const emailModalView: View = {
     //   },
     // },
   ],
+};
+
+const generateEmailPrompt = (input: string): string => {
+  return `以下の用途に沿ったビジネスメールの叩き台を生成してください。 ${input}。件名もよろしく`;
+};
+
+export const submitEmailPrompt = async ({ body, client, ack }: submitPromptArgs) => {
+  await ack();
+  const emailPurposeBlock =
+  body.view.state.values.email_purpose_block.email_purpose_action;
+
+  let emailPurposeValue = "";
+  if (emailPurposeBlock) {
+    emailPurposeValue = emailPurposeBlock.selected_option.value;
+    console.log("Selected option:", emailPurposeValue);
+  } else {
+    console.error("Error: emailPurposeBlock is undefined.");
+  }
+
+
+  const metadata = JSON.parse(body.view.private_metadata);
+  const { channel_id, message_ts } = metadata;
+
+  // 取得したメールの用途と内容をコンソールに出力
+  console.log(`Email Purpose: ${emailPurposeValue}`);
+
+  const res = await ask(generateEmailPrompt(emailPurposeValue));
+
+  // オプション: 入力されたメールの用途と内容をユーザーに確認するメッセージを送信
+  await client.chat.postMessage({
+    channel: channel_id,
+    thread_ts: message_ts,
+    text: res,
+  });
 };
