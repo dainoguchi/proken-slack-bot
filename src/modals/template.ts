@@ -22,7 +22,7 @@ export const openTemplateModal = async ({ body, client }: openModalArgs) => {
 
 export const templateModalView: View = {
   type: "modal",
-  callback_id: "email_modal",
+  callback_id: "template_modal",
   title: {
     type: "plain_text",
     text: "ChatGPTにお願いしたいこと",
