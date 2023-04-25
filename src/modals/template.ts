@@ -40,6 +40,22 @@ export const templateModalView: View = {
             text: 'Emailを書いてください',
           },
         },
+        {
+          type: "button",
+          action_id: "open_search_modal_button",
+          text: {
+            type: "plain_text",
+            text: "情報源付きで検索・質問に答えてください",
+          },
+        },
+        {
+          type: "button",
+          action_id: "open_summarize_modal_button",
+          text: {
+            type: "plain_text",
+            text: "文章を要約してください",
+          },
+        },
       ],
     },
   ],
