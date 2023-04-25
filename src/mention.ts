@@ -5,14 +5,10 @@ import { AppMentionArgs } from "./type";
 export const appMention = async ({ client, event, say }: AppMentionArgs) => {
 
   try {
-  const prompt = event.text.trim();
+  const botUserId = process.env.SLACK_BOT_USER_ID.trim();
+  console.log("👺botUserId", botUserId);
 
-  // promptを' 'でsplitして
-  // 要素数が1つの場合はモーダルを表示
-  // 要素数が2つ以上の場合はGPT-3.5に質問
-  const promptArray = prompt.split(" ");
-
-  if (promptArray.length === 1) {
+  if (event.text === `<@${botUserId}>`) {
     say({
       blocks: [
         {
@@ -48,7 +44,6 @@ export const appMention = async ({ client, event, say }: AppMentionArgs) => {
     const threadId = event.thread_ts || event.ts;
   
     console.log("event", event);
-    const botUserId = process.env.SLACK_BOT_USER_ID;
 
     const replies = await client.conversations.replies({
       channel: channelId,
