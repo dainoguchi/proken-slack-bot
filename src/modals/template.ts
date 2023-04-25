@@ -41,19 +41,59 @@ export const templateModalView: View = {
           },
         },
         {
-          type: "button",
-          action_id: "open_search_modal_button",
+          type: 'button',
+          action_id: 'open_search_modal_button',
           text: {
-            type: "plain_text",
-            text: "情報源付きで検索・質問に答えてください",
+            type: 'plain_text',
+            text: '指定した分野に関する質問に答えてください',
           },
         },
         {
-          type: "button",
-          action_id: "open_summarize_modal_button",
+          type: 'button',
+          action_id: 'open_excel_modal_button',
           text: {
-            type: "plain_text",
-            text: "文章を要約してください",
+            type: 'plain_text',
+            text: 'Excelに関して質問に答えてください',
+          },
+        },
+        {
+          type: 'button',
+          action_id: 'open_summarize_modal_button',
+          text: {
+            type: 'plain_text',
+            text: '文章を要約してください',
+          },
+        },
+        {
+          type: 'button',
+          action_id: 'open_sql_modal_button',
+          text: {
+            type: 'plain_text',
+            text: 'SQLに関して質問に答えてください',
+          },
+        },
+        {
+          type: 'button',
+          action_id: 'open_gas_modal_button',
+          text: {
+            type: 'plain_text',
+            text: 'GoogleAppsScriptに関して質問に答えてください',
+          },
+        },
+        {
+          type: 'button',
+          action_id: 'open_translation_modal_button',
+          text: {
+            type: 'plain_text',
+            text: '文章を翻訳してください',
+          },
+        },
+        {
+          type: 'button',
+          action_id: 'open_english_translation_modal_button',
+          text: {
+            type: 'plain_text',
+            text: '文章を英訳してください',
           },
         },
       ],

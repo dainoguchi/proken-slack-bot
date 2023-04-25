@@ -46,7 +46,7 @@ export const searchModalView: View = {
       },
       label: {
         type: 'plain_text',
-        text: 'Label',
+        text: '分野',
         emoji: true,
       },
     },
@@ -60,7 +60,7 @@ export const searchModalView: View = {
       },
       label: {
         type: 'plain_text',
-        text: 'Label',
+        text: '質問',
         emoji: true,
       },
     },
@@ -72,13 +72,14 @@ const generateSearchPrompt = (
   inputQuestion: string
 ): string => {
   const searchPromptText = `# 命令 #
-あなたは${inputField}のプロとして、今から以下の条件を守ってください
+あなたは${inputField}のプロとして、今から以下の条件を守って回答して下さい。
 # 条件 #
-・回答の中にURLは含めないで下さい
-・オンライン参考文献があれば、そのサイト名のみを提示して下さい
-・オンライン参考文献が提示できた場合は回答の最後に改行し「最新の情報はインプットされていません。回答が誤りの可能性があります」とつけて下さい
-・オンライン参考文献が提示できない場合は回答の最後に改行し「情報源が見つかりませんでした。回答が誤りの可能性があります」とつけて下さい
+・返答の中にURLは含めないで下さい
+・返答はオンライン参考文献を元に行なって下さい
+・返答に使用した全てのオンライン参考文献において、サイト名のみを提示して下さい
 # 入力文 #
+マーケティングにおいて重要なことは何ですか？
+
 ${inputQuestion}`
   return searchPromptText
 }

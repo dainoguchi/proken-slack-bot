@@ -2,8 +2,11 @@ import { View } from '@slack/bolt'
 import { openModalArgs, submitPromptArgs } from '../type'
 import { ask } from '../lib/gpt'
 
-export const openSummarizeModal = async ({ body, client }: openModalArgs) => {
-  console.log('openSummarizeModal    ')
+export const openEnglishTranslationModal = async ({
+  body,
+  client,
+}: openModalArgs) => {
+  console.log('openEnglishTranslationModal    ')
   console.log(body)
   console.log('modal 終わり')
 
@@ -12,15 +15,15 @@ export const openSummarizeModal = async ({ body, client }: openModalArgs) => {
   await client.views.push({
     trigger_id: body.trigger_id,
     view: {
-      ...summarizeModalView,
+      ...englishTranslationModalView,
       private_metadata: metadata,
     },
   })
 }
 
-export const summarizeModalView: View = {
+export const englishTranslationModalView: View = {
   type: 'modal',
-  callback_id: 'summarize_modal',
+  callback_id: 'english_translation_modal',
   title: {
     type: 'plain_text',
     text: 'ChatGPTにお願いしたいこと',
@@ -34,12 +37,12 @@ export const summarizeModalView: View = {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: '以下に入力された文章を要約します',
+        text: '以下に入力された文章を英訳します',
       },
     },
     {
       type: 'input',
-      block_id: 'summarize_purpose_block',
+      block_id: 'english_translation_purpose_block',
       element: {
         type: 'plain_text_input',
         multiline: true,
@@ -54,20 +57,15 @@ export const summarizeModalView: View = {
   ],
 }
 
-const generateSummarizePrompt = (inputText: string): string => {
-  const summarizePromptText = `# 命令 #
-あなたはプロの編集者。以下の条件に従って、入力文を要約して下さい
-# 条件 #
-・重要なキーワードを取りこぼさない
-・文章の意味を変更しない
-・架空の表現や言葉を使用しない
-・文章中の数値には変更を加えない
+const generateEnglishTranslationPrompt = (inputText: string): string => {
+  const englishTranslationPromptText = `# 命令 #
+入力文を英訳してください
 # 入力文 #
 ${inputText}`
-  return summarizePromptText
+  return englishTranslationPromptText
 }
 
-export const submitSummarizePrompt = async ({
+export const submitEnglishTranslationPrompt = async ({
   body,
   client,
   ack,
@@ -75,15 +73,16 @@ export const submitSummarizePrompt = async ({
   await ack({ response_action: 'clear' })
 
   const inputText =
-    body.view.state.values.summarize_purpose_block.plain_text_input_action.value
+    body.view.state.values.englishTranslation_purpose_block
+      .plain_text_input_action.value
 
   const metadata = JSON.parse(body.view.private_metadata)
   const { channel_id, message_ts } = metadata
 
   // 入力された文章の内容をコンソールに出力
-  console.log(`Summarize Purpose: ${inputText}`)
+  console.log(`EnglishTranslation Purpose: ${inputText}`)
 
-  const res = await ask(generateSummarizePrompt(inputText))
+  const res = await ask(generateEnglishTranslationPrompt(inputText))
 
   // オプション: 入力されたメールの用途と内容をユーザーに確認するメッセージを送信
   await client.chat.postMessage({
