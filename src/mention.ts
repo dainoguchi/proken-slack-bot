@@ -4,6 +4,7 @@ import { AppMentionArgs } from "./type";
 
 export const appMention = async ({ client, event, say }: AppMentionArgs) => {
 
+  try {
   const prompt = event.text.trim();
 
   // promptを' 'でsplitして
@@ -43,13 +44,12 @@ export const appMention = async ({ client, event, say }: AppMentionArgs) => {
     });
   }else{
 
-  const channelId = event.channel;
-  const threadId = event.thread_ts || event.ts;
+    const channelId = event.channel;
+    const threadId = event.thread_ts || event.ts;
+  
+    console.log("event", event);
+    const botUserId = process.env.SLACK_BOT_USER_ID;
 
-  console.log("event", event);
-  const botUserId = process.env.SLACK_BOT_USER_ID;
-
-  try {
     const replies = await client.conversations.replies({
       channel: channelId,
       ts: threadId,
@@ -121,7 +121,10 @@ export const appMention = async ({ client, event, say }: AppMentionArgs) => {
       text: gptAnswerText,
       thread_ts: threadId,
     });
-  } catch (error) {
+  }} catch (error) {
+    if (error.data && error.data.error ==='channel_not_found') {
+      console.error(error.data);
+    }
     console.error(error);
   }
-}};
+};

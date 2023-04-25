@@ -27,10 +27,14 @@ export const askWithHistory = async (
   model = GPT_3_5
 ) => {
   console.log("message:", messages)
-  const response = await openai.createChatCompletion({
-    model: model,
-    messages: messages,
-  });
-
-  return response.data.choices[0].message?.content;
+  try{
+    const response = await openai.createChatCompletion({
+      model: model,
+      messages: messages,
+    });
+    return response.data.choices[0].message?.content;
+  }catch(error){
+    console.error("Error calling GPT-3.5:", error);
+    return "Sorry, there was an error generating a response.";
+  }
 };
