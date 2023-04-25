@@ -3,8 +3,10 @@ import { askWithHistory } from "./lib/gpt";
 import { AppMentionArgs } from "./type";
 
 export const appMention = async ({ client, event, say }: AppMentionArgs) => {
+
+  if (event.channel_type === "im") return 
+
   const prompt = event.text.trim();
-  console.log(event);
 
   // promptを' 'でsplitして
   // 要素数が1つの場合はモーダルを表示
@@ -47,7 +49,6 @@ export const appMention = async ({ client, event, say }: AppMentionArgs) => {
     const threadId = event.thread_ts || event.ts;
 
     console.log("event", event);
-    console.log("event bot id", event.bot_id);
     const botUserId = process.env.SLACK_BOT_USER_ID;
 
     try {
@@ -66,9 +67,10 @@ export const appMention = async ({ client, event, say }: AppMentionArgs) => {
 
       // ローディング用の文面を返信
       const waitingMessage = "GPTに聞いています。しばらくお待ち下さい";
-      await say({
+      await client.chat.postMessage({
+        channel: channelId,
         text: waitingMessage,
-        thread_ts: event.ts,
+        thread_ts: threadId,
       });
 
       const preContext = [
@@ -116,9 +118,10 @@ export const appMention = async ({ client, event, say }: AppMentionArgs) => {
       );
 
       /* スレッドに返信 */
-      await say({
+      await client.chat.postMessage({
+        channel: channelId,
         text: gptAnswerText,
-        thread_ts: event.ts,
+        thread_ts: threadId,
       });
     } catch (error) {
       console.error(error);
