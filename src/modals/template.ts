@@ -50,10 +50,10 @@ export const templateModalView: View = {
         },
         {
           type: 'button',
-          action_id: 'open_excel_modal_button',
+          action_id: 'open_spreadsheet_modal_button',
           text: {
             type: 'plain_text',
-            text: 'Excelに関して質問に答えて',
+            text: 'スプレッドシートに関して質問に答えて',
           },
         },
         {
@@ -62,6 +62,14 @@ export const templateModalView: View = {
           text: {
             type: 'plain_text',
             text: '文章を要約して',
+          },
+        },
+        {
+          type: 'button',
+          action_id: 'open_summarize_gist_modal_button',
+          text: {
+            type: 'plain_text',
+            text: '文章の要点を箇条書きでまとめて',
           },
         },
         {

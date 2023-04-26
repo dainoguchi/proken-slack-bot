@@ -1,8 +1,14 @@
 import { app } from './app'
 import { appMention } from './mention'
-import { openEmailModal, submitEmailPrompt } from './modals/email'
 import { openSearchModal, submitSearchPrompt } from './modals/search'
-import { openExcelModal, submitExcelPrompt } from './modals/excel'
+import {
+  openSpreadsheetModal,
+  submitSpreadsheetPrompt,
+} from './modals/spreadsheet'
+import {
+  openSummarizeGistModal,
+  submitSummarizeGistPrompt,
+} from './modals/summarize_gist'
 import { openSummarizeModal, submitSummarizePrompt } from './modals/summarize'
 import { openSqlModal, submitSqlPrompt } from './modals/sql'
 import { openGasModal, submitGasPrompt } from './modals/gas'
@@ -13,7 +19,7 @@ import {
 import {
   openEnglishTranslationModal,
   submitEnglishTranslationPrompt,
-} from './modals/englishTranslation'
+} from './modals/english_translation'
 import { openTemplateModal } from './modals/template'
 import { addPingCommand } from './command'
 ;(async () => {
@@ -27,14 +33,14 @@ addPingCommand(app)
 app.message(process.env.SLACK_BOT_USER_ID, appMention)
 app.action('open_template_modal_button', openTemplateModal)
 
-app.action('open_email_modal_button', openEmailModal)
-app.view('email_modal', submitEmailPrompt)
-
 app.action('open_search_modal_button', openSearchModal)
 app.view('search_modal', submitSearchPrompt)
 
-app.action('open_excel_modal_button', openExcelModal)
-app.view('excel_modal', submitExcelPrompt)
+app.action('open_spreadsheet_modal_button', openSpreadsheetModal)
+app.view('spreadsheet_modal', submitSpreadsheetPrompt)
+
+app.action('open_summarize_gist_modal_button', openSummarizeGistModal)
+app.view('summarize_gist_modal', submitSummarizeGistPrompt)
 
 app.action('open_summarize_modal_button', openSummarizeModal)
 app.view('summarize_modal', submitSummarizePrompt)

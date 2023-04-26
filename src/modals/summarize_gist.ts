@@ -2,8 +2,8 @@ import { View } from '@slack/bolt'
 import { openModalArgs, submitPromptArgs } from '../type'
 import { ask } from '../lib/gpt'
 
-export const openSummarizeModal = async ({ body, client }: openModalArgs) => {
-  console.log('openSummarizeModal    ')
+export const openSummarizeGistModal = async ({ body, client }: openModalArgs) => {
+  console.log('openSummarizeGistModal    ')
   console.log(body)
   console.log('modal 終わり')
 
@@ -12,15 +12,15 @@ export const openSummarizeModal = async ({ body, client }: openModalArgs) => {
   await client.views.push({
     trigger_id: body.trigger_id,
     view: {
-      ...summarizeModalView,
+      ...summarizeGistModalView,
       private_metadata: metadata,
     },
   })
 }
 
-export const summarizeModalView: View = {
+export const summarizeGistModalView: View = {
   type: 'modal',
-  callback_id: 'summarize_modal',
+  callback_id: 'summarize_gist_modal',
   title: {
     type: 'plain_text',
     text: 'ChatGPTにお願いしたいこと',
@@ -39,7 +39,7 @@ export const summarizeModalView: View = {
     },
     {
       type: 'input',
-      block_id: 'summarize_text_block',
+      block_id: 'summarize_gist_text_block',
       element: {
         type: 'plain_text_input',
         multiline: true,
@@ -54,9 +54,9 @@ export const summarizeModalView: View = {
   ],
 }
 
-const generateSummarizePrompt = (inputText: string): string => {
-  const summarizePromptText = `# 命令 #
-あなたはプロの編集者として、以下の条件を守って入力文を要約して下さい。
+const generateSummarizeGistPrompt = (inputText: string): string => {
+  const summarizeGistPromptText = `# 命令 #
+あなたはプロの編集者として、以下の条件を守って入力文の要点を箇条書きにして下さい。
 # 条件 #
 重要なキーワードを取りこぼさない
 文章の意味を変更しない
@@ -64,10 +64,10 @@ const generateSummarizePrompt = (inputText: string): string => {
 文章中の数値には変更を加えない
 # 入力文 #
 ${inputText}`
-  return summarizePromptText
+  return summarizeGistPromptText
 }
 
-export const submitSummarizePrompt = async ({
+export const submitSummarizeGistPrompt = async ({
   body,
   client,
   ack,
@@ -75,15 +75,15 @@ export const submitSummarizePrompt = async ({
   await ack({ response_action: 'clear' })
 
   const inputText =
-    body.view.state.values.summarize_text_block.plain_text_input_action.value
+    body.view.state.values.summarize_gist_text_block.plain_text_input_action.value
 
   const metadata = JSON.parse(body.view.private_metadata)
   const { channel_id, message_ts } = metadata
 
   // 入力された文章の内容をコンソールに出力
-  console.log(`Summarize Purpose: ${inputText}`)
+  console.log(`SummarizeGist Purpose: ${inputText}`)
 
-  const res = await ask(generateSummarizePrompt(inputText))
+  const res = await ask(generateSummarizeGistPrompt(inputText))
 
   // オプション: 入力されたメールの用途と内容をユーザーに確認するメッセージを送信
   await client.chat.postMessage({

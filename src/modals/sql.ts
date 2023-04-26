@@ -55,7 +55,7 @@ export const sqlModalView: View = {
 
 const generateSqlPrompt = (input: string): string => {
   const sqlPromptText = `# 命令 #
-あなたはSQLのプロとして、今から以下の条件を守ってクエリを作成してください
+あなたはSQLの専門家として、今から以下の条件を守ってクエリを作成してください
 # 条件 #
 ・返答の中にURLは含めないで下さい
 ・返答にオンライン参考文献を使用した場合、サイト名のみを提示して下さい

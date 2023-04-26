@@ -55,7 +55,7 @@ export const gasModalView: View = {
 
 const generateGasPrompt = (input: string): string => {
   const gasPromptText = `# 命令 #
-あなたはGoogle Apps Scriptのプロとして、今から以下の条件を守って回答して下さい。
+あなたはGoogleAppsScriptの専門家として、今から以下の条件を守って回答して下さい。
 # 条件 #
 ・返答の中にURLは含めないで下さい
 ・返答にオンライン参考文献を使用した場合、サイト名のみを提示して下さい
