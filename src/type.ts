@@ -17,3 +17,21 @@ export type submitPromptArgs = {
   client: WebClient
   ack: any
 }
+
+export type Message = {
+  role: 'user' | 'assistant'
+  content: string
+}
+
+export type ApiRequest = {
+  messages: Message[]
+  slack_id: string
+  timestamp: string
+  thread_id: string
+  channel_id: string
+  service: string
+}
+
+export type ApiResponse = {
+  message: string
+}

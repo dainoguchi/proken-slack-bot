@@ -104,9 +104,14 @@ export const appMention = async ({ client, event, say }: AppMentionArgs) => {
 
       console.log('threadMessages: ', threadMessages)
 
-      const gptAnswerText = await askWithHistory(
-        [...preContext, ...threadMessages] // 配列を結合
-      )
+      const gptAnswerText = await askWithHistory({
+        messages: [...preContext, ...threadMessages],
+        slack_id: 'string',
+        timestamp: 'string',
+        thread_id: 'string',
+        channel_id: 'string',
+        service: 'string',
+      })
 
       /* スレッドに返信 */
       await client.chat.postMessage({
