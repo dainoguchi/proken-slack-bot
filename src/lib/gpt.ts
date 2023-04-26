@@ -4,6 +4,7 @@ import { ApiRequest, ApiResponse } from '../type'
 export const ask = async (message: string) => {
   try {
     const response = await axios.post<ApiResponse>(process.env.BE_URL, message)
+    console.log(`回答:${response.data.message}`)
     return response.data.message
   } catch (error) {
     console.error('Error calling GPT:', error)
