@@ -93,7 +93,7 @@ export const templateModalView: View = {
           action_id: 'open_translation_modal_button',
           text: {
             type: 'plain_text',
-            text: '文章を翻訳して',
+            text: '文章を日本語に翻訳して',
           },
         },
         {
