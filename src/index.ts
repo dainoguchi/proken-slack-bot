@@ -4,9 +4,11 @@ import { openEmailModal, submitEmailPrompt } from './modals/email'
 import { openTemplateModal } from './modals/template'
 import { addPingCommand } from './command'
 
+const port = process.env.PORT || 3000
+
 ;(async () => {
   // アプリを起動します
-  await app.start()
+  await app.start(port)
   console.log('⚡️ Bolt app is running!')
 })()
 
