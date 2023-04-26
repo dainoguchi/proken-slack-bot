@@ -3,10 +3,6 @@ import { openModalArgs, submitPromptArgs } from '../type'
 import { ask } from '../lib/gpt'
 
 export const openGasModal = async ({ body, client }: openModalArgs) => {
-  console.log('openGasModal    ')
-  console.log(body)
-  console.log('modal 終わり')
-
   const metadata = body.view.private_metadata
 
   await client.views.push({
@@ -77,9 +73,6 @@ export const submitGasPrompt = async ({
 
   const metadata = JSON.parse(body.view.private_metadata)
   const { channel_id, message_ts } = metadata
-
-  // 入力された文章の内容をコンソールに出力
-  console.log(`Gas Purpose: ${inputGasQuestion}`)
 
   const res = await ask(generateGasPrompt(inputGasQuestion))
 

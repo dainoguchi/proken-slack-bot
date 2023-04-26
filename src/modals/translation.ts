@@ -3,10 +3,6 @@ import { openModalArgs, submitPromptArgs } from '../type'
 import { ask } from '../lib/gpt'
 
 export const openTranslationModal = async ({ body, client }: openModalArgs) => {
-  console.log('openTranslationModal    ')
-  console.log(body)
-  console.log('modal 終わり')
-
   const metadata = body.view.private_metadata
 
   await client.views.push({
@@ -81,9 +77,6 @@ export const submitTranslationPrompt = async ({
 
   const metadata = JSON.parse(body.view.private_metadata)
   const { channel_id, message_ts } = metadata
-
-  // 入力された文章の内容をコンソールに出力
-  console.log(`Translation Purpose: ${inputText}`)
 
   const res = await ask(generateTranslationPrompt(inputText))
 

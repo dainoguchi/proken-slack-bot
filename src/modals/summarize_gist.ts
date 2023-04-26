@@ -2,11 +2,10 @@ import { View } from '@slack/bolt'
 import { openModalArgs, submitPromptArgs } from '../type'
 import { ask } from '../lib/gpt'
 
-export const openSummarizeGistModal = async ({ body, client }: openModalArgs) => {
-  console.log('openSummarizeGistModal    ')
-  console.log(body)
-  console.log('modal 終わり')
-
+export const openSummarizeGistModal = async ({
+  body,
+  client,
+}: openModalArgs) => {
   const metadata = body.view.private_metadata
 
   await client.views.push({
@@ -75,13 +74,11 @@ export const submitSummarizeGistPrompt = async ({
   await ack({ response_action: 'clear' })
 
   const inputText =
-    body.view.state.values.summarize_gist_text_block.plain_text_input_action.value
+    body.view.state.values.summarize_gist_text_block.plain_text_input_action
+      .value
 
   const metadata = JSON.parse(body.view.private_metadata)
   const { channel_id, message_ts } = metadata
-
-  // 入力された文章の内容をコンソールに出力
-  console.log(`SummarizeGist Purpose: ${inputText}`)
 
   const res = await ask(generateSummarizeGistPrompt(inputText))
 

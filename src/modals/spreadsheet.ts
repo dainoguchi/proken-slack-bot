@@ -3,10 +3,6 @@ import { openModalArgs, submitPromptArgs } from '../type'
 import { ask } from '../lib/gpt'
 
 export const openSpreadsheetModal = async ({ body, client }: openModalArgs) => {
-  console.log('openSpreadsheetModal    ')
-  console.log(body)
-  console.log('modal 終わり')
-
   const metadata = body.view.private_metadata
 
   await client.views.push({
@@ -77,9 +73,6 @@ export const submitSpreadsheetPrompt = async ({
 
   const metadata = JSON.parse(body.view.private_metadata)
   const { channel_id, message_ts } = metadata
-
-  // 入力された文章の内容をコンソールに出力
-  console.log(`Spreadsheet Purpose: ${inputSpreadsheetQuestion}`)
 
   const res = await ask(generateSpreadsheetPrompt(inputSpreadsheetQuestion))
 

@@ -5,7 +5,6 @@ import { AppMentionArgs } from './type'
 export const appMention = async ({ client, event, say }: AppMentionArgs) => {
   try {
     const botUserId = process.env.SLACK_BOT_USER_ID.trim()
-    console.log('👺botUserId', botUserId)
 
     if (event.text === `<@${botUserId}>`) {
       say({
@@ -41,14 +40,10 @@ export const appMention = async ({ client, event, say }: AppMentionArgs) => {
       const channelId = event.channel
       const threadId = event.thread_ts || event.ts
 
-      console.log('event', event)
-
       const replies = await client.conversations.replies({
         channel: channelId,
         ts: threadId,
       })
-
-      console.log('raw replies: ', replies)
 
       if (!replies.messages) {
         await say('スレッドが見つかりませんでした')
@@ -101,8 +96,6 @@ export const appMention = async ({ client, event, say }: AppMentionArgs) => {
 
         return true
       })
-
-      console.log('threadMessages: ', threadMessages)
 
       const gptAnswerText = await askWithHistory({
         messages: [...preContext, ...threadMessages],

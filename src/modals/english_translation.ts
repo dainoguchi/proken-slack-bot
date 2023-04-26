@@ -6,10 +6,6 @@ export const openEnglishTranslationModal = async ({
   body,
   client,
 }: openModalArgs) => {
-  console.log('openEnglishTranslationModal    ')
-  console.log(body)
-  console.log('modal 終わり')
-
   const metadata = body.view.private_metadata
 
   await client.views.push({
@@ -85,9 +81,6 @@ export const submitEnglishTranslationPrompt = async ({
 
   const metadata = JSON.parse(body.view.private_metadata)
   const { channel_id, message_ts } = metadata
-
-  // 入力された文章の内容をコンソールに出力
-  console.log(`EnglishTranslation Purpose: ${inputText}`)
 
   const res = await ask(generateEnglishTranslationPrompt(inputText))
 

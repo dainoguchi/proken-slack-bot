@@ -3,10 +3,6 @@ import { openModalArgs, submitPromptArgs } from '../type'
 import { ask } from '../lib/gpt'
 
 export const openSummarizeModal = async ({ body, client }: openModalArgs) => {
-  console.log('openSummarizeModal    ')
-  console.log(body)
-  console.log('modal 終わり')
-
   const metadata = body.view.private_metadata
 
   await client.views.push({
@@ -79,9 +75,6 @@ export const submitSummarizePrompt = async ({
 
   const metadata = JSON.parse(body.view.private_metadata)
   const { channel_id, message_ts } = metadata
-
-  // 入力された文章の内容をコンソールに出力
-  console.log(`Summarize Purpose: ${inputText}`)
 
   const res = await ask(generateSummarizePrompt(inputText))
 

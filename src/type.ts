@@ -1,4 +1,4 @@
-import { AckFn, SayFn } from '@slack/bolt'
+import { SayFn } from '@slack/bolt'
 import { WebClient } from '@slack/web-api'
 
 export type AppMentionArgs = {
