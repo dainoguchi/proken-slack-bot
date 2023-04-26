@@ -51,7 +51,6 @@ export const searchModalView: View = {
       },
     },
     {
-      dispatch_action: true,
       type: 'input',
       block_id: 'search_question_purpose_block',
       element: {
@@ -72,14 +71,11 @@ const generateSearchPrompt = (
   inputQuestion: string
 ): string => {
   const searchPromptText = `# 命令 #
-あなたは${inputField}のプロとして、今から以下の条件を守って回答して下さい。
+あなたは${inputField}の専門家として、今から以下の条件を守って回答して下さい。
 # 条件 #
 ・返答の中にURLは含めないで下さい
-・返答はオンライン参考文献を元に行なって下さい
-・返答に使用した全てのオンライン参考文献において、サイト名のみを提示して下さい
+・返答にオンライン参考文献を使用した場合、サイト名のみを提示して下さい
 # 入力文 #
-マーケティングにおいて重要なことは何ですか？
-
 ${inputQuestion}`
   return searchPromptText
 }

@@ -59,7 +59,13 @@ export const englishTranslationModalView: View = {
 
 const generateEnglishTranslationPrompt = (inputText: string): string => {
   const englishTranslationPromptText = `# 命令 #
-入力文を英訳して下さい。
+以下の条件を守って入力文を英訳して下さい。
+# 条件 #
+・重要なキーワードを取りこぼさない
+・文章の意味を変更しない
+・架空の表現や言葉を使用しない
+・文章中の数値には変更を加えない
+・英語の文法に従って英訳する
 # 入力文 #
 ${inputText}
 # 翻訳文 #`

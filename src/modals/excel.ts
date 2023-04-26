@@ -38,7 +38,6 @@ export const excelModalView: View = {
       },
     },
     {
-      dispatch_action: true,
       type: 'input',
       block_id: 'excel_question_purpose_block',
       element: {
@@ -58,8 +57,8 @@ const generateExcelPrompt = (input: string): string => {
   const excelPromptText = `# 命令 #
 あなたはExcelのプロとして、今から以下の条件を守って回答して下さい。
 # 条件 #
-・返答はオンライン参考文献を元に行なって下さい
-・返答に使用したオンライン参考文献を提示して下さい
+・返答の中にURLは含めないで下さい
+・返答にオンライン参考文献を使用した場合、サイト名のみを提示して下さい
 # 入力文 #
 ${input}`
   return excelPromptText

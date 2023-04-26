@@ -37,7 +37,7 @@ export const templateModalView: View = {
           action_id: 'open_email_modal_button',
           text: {
             type: 'plain_text',
-            text: 'Emailを書いてください',
+            text: 'Emailを書いて',
           },
         },
         {
@@ -45,7 +45,7 @@ export const templateModalView: View = {
           action_id: 'open_search_modal_button',
           text: {
             type: 'plain_text',
-            text: '指定した分野に関する質問に答えてください',
+            text: '指定した分野の質問に答えて',
           },
         },
         {
@@ -53,7 +53,7 @@ export const templateModalView: View = {
           action_id: 'open_excel_modal_button',
           text: {
             type: 'plain_text',
-            text: 'Excelに関して質問に答えてください',
+            text: 'Excelに関して質問に答えて',
           },
         },
         {
@@ -61,7 +61,7 @@ export const templateModalView: View = {
           action_id: 'open_summarize_modal_button',
           text: {
             type: 'plain_text',
-            text: '文章を要約してください',
+            text: '文章を要約して',
           },
         },
         {
@@ -69,7 +69,7 @@ export const templateModalView: View = {
           action_id: 'open_sql_modal_button',
           text: {
             type: 'plain_text',
-            text: 'SQLに関して質問に答えてください',
+            text: 'SQLに関して質問に答えて',
           },
         },
         {
@@ -77,7 +77,7 @@ export const templateModalView: View = {
           action_id: 'open_gas_modal_button',
           text: {
             type: 'plain_text',
-            text: 'GoogleAppsScriptに関して質問に答えてください',
+            text: 'GASに関して質問に答えて',
           },
         },
         {
@@ -85,7 +85,7 @@ export const templateModalView: View = {
           action_id: 'open_translation_modal_button',
           text: {
             type: 'plain_text',
-            text: '文章を翻訳してください',
+            text: '文章を翻訳して',
           },
         },
         {
@@ -93,7 +93,7 @@ export const templateModalView: View = {
           action_id: 'open_english_translation_modal_button',
           text: {
             type: 'plain_text',
-            text: '文章を英訳してください',
+            text: '文章を英訳して',
           },
         },
       ],
