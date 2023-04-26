@@ -1,5 +1,6 @@
 import { app } from './app'
 import { appMention } from './mention'
+// import { openEmailModal, submitEmailPrompt } from './modals/email'
 import { openSearchModal, submitSearchPrompt } from './modals/search'
 import {
   openSpreadsheetModal,
@@ -32,6 +33,9 @@ addPingCommand(app)
 
 app.message(process.env.SLACK_BOT_USER_ID, appMention)
 app.action('open_template_modal_button', openTemplateModal)
+
+// app.action('open_email_modal_button', openEmailModal)
+// app.view('email_modal', submitEmailPrompt)
 
 app.action('open_search_modal_button', openSearchModal)
 app.view('search_modal', submitSearchPrompt)
