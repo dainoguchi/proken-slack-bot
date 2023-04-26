@@ -5,9 +5,7 @@ import { askWithHistory } from '../lib/gpt'
 export const openSummarizeGistModal = async ({
   body,
   client,
-  ack,
 }: openModalArgs) => {
-  ack()
   const metadata = body.view.private_metadata
 
   await client.views.push({

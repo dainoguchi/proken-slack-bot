@@ -5,13 +5,11 @@ export type AppMentionArgs = {
   client: WebClient
   event: any
   say: SayFn
-  ack: any
 }
 
 export type openModalArgs = {
   body: any
   client: WebClient
-  ack: any
 }
 
 export type submitPromptArgs = {
