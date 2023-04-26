@@ -59,9 +59,10 @@ export const englishTranslationModalView: View = {
 
 const generateEnglishTranslationPrompt = (inputText: string): string => {
   const englishTranslationPromptText = `# 命令 #
-入力文を英訳してください
+入力文を英訳して下さい。
 # 入力文 #
-${inputText}`
+${inputText}
+# 翻訳文 #`
   return englishTranslationPromptText
 }
 
