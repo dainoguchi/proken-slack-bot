@@ -13,7 +13,7 @@ const pingCommand = async ({
   respond: RespondFn
 }) => {
   // コマンドの受信を確認
-  await ack()
+  ack()
 
   // ユーザーに対してpongを返す
   await respond('pong')

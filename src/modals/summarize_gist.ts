@@ -7,7 +7,7 @@ export const openSummarizeGistModal = async ({
   client,
   ack,
 }: openModalArgs) => {
-  await ack()
+  ack()
   const metadata = body.view.private_metadata
 
   await client.views.push({

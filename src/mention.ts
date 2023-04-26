@@ -8,7 +8,7 @@ export const appMention = async ({
   say,
   ack,
 }: AppMentionArgs) => {
-  await ack()
+  ack()
   try {
     const botUserId = process.env.SLACK_BOT_USER_ID.trim()
 

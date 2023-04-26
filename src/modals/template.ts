@@ -6,7 +6,7 @@ export const openTemplateModal = async ({
   client,
   ack,
 }: openModalArgs) => {
-  await ack()
+  ack()
   const metadata = JSON.stringify({
     channel_id: body.channel.id,
     message_ts: body.message.ts,

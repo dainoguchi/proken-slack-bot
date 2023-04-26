@@ -3,7 +3,7 @@ import { openModalArgs, submitPromptArgs } from '../type'
 import { askWithHistory } from '../lib/gpt'
 
 export const openGasModal = async ({ body, client, ack }: openModalArgs) => {
-  await ack()
+  ack()
   const metadata = body.view.private_metadata
 
   await client.views.push({
