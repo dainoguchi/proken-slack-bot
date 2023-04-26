@@ -23,9 +23,12 @@ import {
 } from './modals/english_translation'
 import { openTemplateModal } from './modals/template'
 import { addPingCommand } from './command'
+
+const port = process.env.PORT || 3000
+
 ;(async () => {
   // アプリを起動します
-  await app.start()
+  await app.start(port)
   console.log('⚡️ Bolt app is running!')
 })()
 
