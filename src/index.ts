@@ -6,7 +6,7 @@ import { addPingCommand } from "./command";
 
 (async () => {
   // アプリを起動します
-  await app.start();
+  await app.start(8080);
   console.log("⚡️ Bolt app is running!");
 })();
 
