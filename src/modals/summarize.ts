@@ -1,6 +1,6 @@
 import { View } from '@slack/bolt'
 import { openModalArgs, submitPromptArgs } from '../type'
-import { ask } from '../lib/gpt'
+import { askWithHistory } from '../lib/gpt'
 
 export const openSummarizeModal = async ({ body, client }: openModalArgs) => {
   const metadata = body.view.private_metadata
@@ -76,7 +76,19 @@ export const submitSummarizePrompt = async ({
   const metadata = JSON.parse(body.view.private_metadata)
   const { channel_id, message_ts } = metadata
 
-  const res = await ask(generateSummarizePrompt(inputText))
+  const res = await askWithHistory({
+    messages: [
+      {
+        role: 'user',
+        content: generateSummarizePrompt(inputText),
+      },
+    ],
+    slack_id: 'string',
+    timestamp: 'string',
+    thread_id: 'string',
+    channel_id: 'string',
+    service: 'string',
+  })
 
   // オプション: 入力されたメールの用途と内容をユーザーに確認するメッセージを送信
   await client.chat.postMessage({
