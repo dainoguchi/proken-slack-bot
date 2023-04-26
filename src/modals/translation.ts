@@ -2,7 +2,12 @@ import { View } from '@slack/bolt'
 import { openModalArgs, submitPromptArgs } from '../type'
 import { askWithHistory } from '../lib/gpt'
 
-export const openTranslationModal = async ({ body, client }: openModalArgs) => {
+export const openTranslationModal = async ({
+  body,
+  client,
+  ack,
+}: openModalArgs) => {
+  await ack()
   const metadata = body.view.private_metadata
 
   await client.views.push({

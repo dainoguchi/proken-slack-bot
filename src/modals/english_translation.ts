@@ -5,7 +5,9 @@ import { askWithHistory } from '../lib/gpt'
 export const openEnglishTranslationModal = async ({
   body,
   client,
+  ack,
 }: openModalArgs) => {
+  await ack()
   const metadata = body.view.private_metadata
 
   await client.views.push({

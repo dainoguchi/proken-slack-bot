@@ -3,6 +3,7 @@ import { askWithHistory } from './lib/gpt'
 import { AppMentionArgs } from './type'
 
 export const appMention = async ({ client, event, say }: AppMentionArgs) => {
+  await ack()
   try {
     const botUserId = process.env.SLACK_BOT_USER_ID.trim()
 
