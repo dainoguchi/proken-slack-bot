@@ -34,7 +34,7 @@ export const translationModalView: View = {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: '以下に入力された文章を翻訳します',
+        text: '以下に入力された文章を日本語に翻訳します',
       },
     },
     {
