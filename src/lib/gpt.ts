@@ -12,7 +12,13 @@ export const askWithHistory = async (requestBody: ApiRequest) => {
     )
     return response.data.message
   } catch (error) {
-    console.error('Error calling GPT:', error)
+    console.error(
+      `Error calling GPT: ${error.message} ${error.response.statusText}
+error code: ${error.code}, 
+method: ${error.config.method}, 
+url: ${error.config.url}, 
+data: ${error.config.data}`
+    )
     return 'Sorry, there was an error generating a response from GPT.'
   }
 }
