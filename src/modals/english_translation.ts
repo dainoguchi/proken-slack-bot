@@ -92,7 +92,7 @@ export const submitEnglishTranslationPrompt = async ({
   })
 
   // ローディング用の文面を返信
-  const waitingMessage = 'GPTに聞いています。しばらくお待ち下さい'
+  const waitingMessage = 'Buddyに聞いています。しばらくお待ち下さい'
   const loadingMessage = await client.chat.postMessage({
     channel: channel_id,
     text: waitingMessage,
