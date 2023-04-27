@@ -5,7 +5,7 @@ export const askWithHistory = async (requestBody: ApiRequest) => {
   try {
     console.log(`質問:${JSON.stringify(requestBody)}`)
     const headers = {
-      'x-api-key': process.env.GPT_API_KEY,
+      'x-api-key': process.env.BE_API_KEY,
     }
     const response = await axios.post<ApiResponse>(
       process.env.BE_URL,
