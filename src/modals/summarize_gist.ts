@@ -80,6 +80,25 @@ export const submitSummarizeGistPrompt = async ({
   const metadata = JSON.parse(body.view.private_metadata)
   const { channel_id, message_ts } = metadata
 
+  // 入力した質問内容を送信
+  await client.chat.postMessage({
+    channel: channel_id,
+    thread_ts: message_ts,
+    text: `\`\`\`${generateSummarizeGistPrompt(inputText)}\`\`\``,
+    username: '質問',
+    icon_emoji: ':slack_call:',
+  })
+
+  // ローディング用の文面を返信
+  const waitingMessage = 'GPTに聞いています。しばらくお待ち下さい'
+  const loadingMessage = await client.chat.postMessage({
+    channel: channel_id,
+    text: waitingMessage,
+    thread_ts: message_ts,
+    username: 'Loading...',
+    icon_emoji: ':loading:',
+  })
+
   const res = await askWithHistory({
     messages: [
       {
@@ -94,10 +113,22 @@ export const submitSummarizeGistPrompt = async ({
     service: 'string',
   })
 
-  // オプション: 入力されたメールの用途と内容をユーザーに確認するメッセージを送信
+  // 回答を返信
   await client.chat.postMessage({
     channel: channel_id,
     thread_ts: message_ts,
     text: res,
+  })
+
+  /* ローディングを削除 */
+  client.chat.delete({
+    channel: channel_id,
+    ts: loadingMessage.ts,
+  })
+
+  // プロンプト画面を削除
+  client.chat.delete({
+    channel: channel_id,
+    ts: message_ts,
   })
 }

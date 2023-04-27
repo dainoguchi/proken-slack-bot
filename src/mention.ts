@@ -12,8 +12,10 @@ export const appMention = async ({
     const botUserId = process.env.SLACK_BOT_USER_ID.trim()
 
     if (event.text === `<@${botUserId}>` || event.text === `<@${botUserId}> `) {
-      console.log('body', body)
-      say({
+      const threadId = event.thread_ts || event.ts
+      client.chat.postMessage({
+        channel: event.channel,
+        thread_ts: threadId,
         blocks: [
           {
             type: 'actions',
@@ -44,7 +46,6 @@ export const appMention = async ({
     } else {
       const channelId = event.channel
       const threadId = event.thread_ts || event.ts
-
       const replies = await client.conversations.replies({
         channel: channelId,
         ts: threadId,
@@ -87,7 +88,7 @@ export const appMention = async ({
             message.user === botUserId
               ? ChatCompletionRequestMessageRoleEnum.Assistant
               : ChatCompletionRequestMessageRoleEnum.User,
-          content: (message.text || '').replace(`<@${botUserId}> `, ''),
+          content: (message.text || '').replace(`<@${botUserId}>`, ''),
         }
       })
 
@@ -96,8 +97,11 @@ export const appMention = async ({
           return false
         }
 
-        // botに対するメンション以外は無視する
-        if (message.content.startsWith(`<@${botUserId}> `)) {
+        // botに対するメンションは無視する
+        if (
+          message.content == `<@${botUserId}>` ||
+          message.content == `<@${botUserId}> `
+        ) {
           return false
         }
 

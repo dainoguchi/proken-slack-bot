@@ -3,13 +3,16 @@ import { ApiRequest, ApiResponse } from '../type'
 
 export const askWithHistory = async (requestBody: ApiRequest) => {
   try {
+    console.log(`質問:${JSON.stringify(requestBody)}`)
+    const headers = {
+      'x-api-key': process.env.GPT_API_KEY,
+    }
     const response = await axios.post<ApiResponse>(
       process.env.BE_URL,
-      requestBody
+      requestBody,
+      { headers: headers }
     )
-    console.log(
-      `質問:${JSON.stringify(requestBody)}, 回答:${response.data.message}`
-    )
+    console.log(`回答:${response.data.message}`)
     return response.data.message
   } catch (error) {
     console.error(
