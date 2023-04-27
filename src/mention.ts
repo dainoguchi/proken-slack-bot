@@ -53,10 +53,12 @@ export const appMention = async ({ client, event, say }: AppMentionArgs) => {
 
       // ローディング用の文面を返信
       const waitingMessage = 'GPTに聞いています。しばらくお待ち下さい'
-      await client.chat.postMessage({
+      const loadingMessage = await client.chat.postMessage({
         channel: channelId,
         text: waitingMessage,
         thread_ts: threadId,
+        username: 'Loading...',
+        icon_emoji: ':loading:',
       })
 
       const preContext = [
@@ -111,6 +113,12 @@ export const appMention = async ({ client, event, say }: AppMentionArgs) => {
         channel: channelId,
         text: gptAnswerText,
         thread_ts: threadId,
+      })
+
+      /* ローディングを削除 */
+      client.chat.delete({
+        channel: channelId,
+        ts: loadingMessage.ts,
       })
     }
   } catch (error) {
