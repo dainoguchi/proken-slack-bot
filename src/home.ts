@@ -17,7 +17,7 @@ export const homeView: View = {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: 'BuySellGPTへようこそ',
+        text: 'SlackBuddyへようこそ',
       },
     },
     {

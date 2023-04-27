@@ -2,8 +2,8 @@ _metadata:
   major_version: 1
   minor_version: 1
 display_information:
-  name: BuySellGPT
-  description: SlackからGPTを呼び出すことができます
+  name: SlackBuddy
+  description: SlackからBuySellBuddyを呼び出すことができます
   background_color: '#00A67E'
 features:
   app_home:
@@ -11,7 +11,7 @@ features:
     messages_tab_enabled: true
     messages_tab_read_only_enabled: false
   bot_user:
-    display_name: BuySellGPT
+    display_name: SlackBuddy
     always_online: true
 oauth_config:
   scopes:
