@@ -41,7 +41,7 @@ export const templateModalView: View = {
           action_id: 'open_spreadsheet_modal_button',
           text: {
             type: 'plain_text',
-            text: 'スプレッドシートに関して質問に答えて',
+            text: 'スプシに関する質問に答えて',
           },
         },
         {
