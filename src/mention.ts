@@ -6,7 +6,7 @@ export const appMention = async ({ client, event, say }: AppMentionArgs) => {
   try {
     const botUserId = process.env.SLACK_BOT_USER_ID.trim()
 
-    if (event.text === `<@${botUserId}>`) {
+    if (event.text === `<@${botUserId}>` || event.text === `<@${botUserId}> `) {
       say({
         blocks: [
           {
