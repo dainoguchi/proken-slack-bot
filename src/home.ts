@@ -2,8 +2,6 @@ import { View } from '@slack/bolt'
 import { OpenHomeArgs } from './type'
 
 export const openHome = async ({ event, client }: OpenHomeArgs) => {
-  console.log('openHome')
-  console.log('client:', client)
   await client.views.publish({
     user_id: event.user,
     view: {

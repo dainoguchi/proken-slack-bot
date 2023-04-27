@@ -3,6 +3,7 @@ import { WebClient } from '@slack/web-api'
 
 export type AppMentionArgs = {
   client: WebClient
+  body: any
   event: any
   say: SayFn
 }

@@ -2,11 +2,17 @@ import { ChatCompletionRequestMessageRoleEnum } from 'openai'
 import { askWithHistory } from './lib/gpt'
 import { AppMentionArgs } from './type'
 
-export const appMention = async ({ client, event, say }: AppMentionArgs) => {
+export const appMention = async ({
+  body,
+  client,
+  event,
+  say,
+}: AppMentionArgs) => {
   try {
     const botUserId = process.env.SLACK_BOT_USER_ID.trim()
 
     if (event.text === `<@${botUserId}>` || event.text === `<@${botUserId}> `) {
+      console.log('body', body)
       say({
         blocks: [
           {
@@ -19,8 +25,7 @@ export const appMention = async ({ client, event, say }: AppMentionArgs) => {
                   text: '使い方を見る',
                   emoji: true,
                 },
-                value: 'clicked',
-                action_id: 'open_usage_modal_button',
+                url: `slack://app?team=${body.team_id}&id=${body.api_app_id}`,
               },
               {
                 type: 'button',
