@@ -7,6 +7,11 @@ export type AppMentionArgs = {
   say: SayFn
 }
 
+export type OpenHomeArgs = {
+  event: any
+  client: WebClient
+}
+
 export type openModalArgs = {
   body: any
   client: WebClient

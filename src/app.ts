@@ -5,6 +5,6 @@ export const app = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET,
 
   // ローカルで動かす場合はsocketModeをtrueにする
-  // socketMode: true,
-  // appToken: process.env.SLACK_APP_TOKEN,
+  socketMode: true,
+  appToken: process.env.SLACK_APP_TOKEN,
 })

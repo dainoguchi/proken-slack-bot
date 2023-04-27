@@ -1,4 +1,5 @@
 import { app } from './app'
+import { openHome } from './home'
 import { appMention } from './mention'
 // import { openEmailModal, submitEmailPrompt } from './modals/email'
 import { openSearchModal, submitSearchPrompt } from './modals/search'
@@ -33,6 +34,8 @@ const port = process.env.PORT || 3000
 })()
 
 addPingCommand(app)
+
+app.event('app_home_opened', openHome)
 
 app.message(process.env.SLACK_BOT_USER_ID, appMention)
 app.action('open_template_modal_button', openTemplateModal)
